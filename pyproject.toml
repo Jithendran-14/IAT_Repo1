@@ -1,0 +1,17 @@
+[project]
+name = "iat-rag-agent-example"
+version = "0.1.0"
+description = "IAT RAG example with local models and database"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    "iat-agent-sdk==2.6.3",
+    "iat-evaluation-sdk==1.1.22",
+    "iat-rag-ingestion-sdk==3.0.6",
+    "iat-rag-retrieval-sdk==1.1.22",
+    "iat-service-sdk==1.1.26",
+]
+
+[[tool.uv.index]]
+name = "artifactory"
+url = "https://artifactory.oci.oraclecorp.com/api/pypi/global-release-pypi/simple"
+default = true

@@ -1,0 +1,50 @@
+async_config:
+  queue_size: 10
+  semaphore: 1
+
+ingestion:
+  sources:
+    local_documents:
+      type: LocalStorage
+      directory_path: ./documents
+      file_extensions: [".txt"]
+      include_subdirectories: false
+      batch_size: 1
+
+parser:
+  enable_partitioning: false
+
+chunking:
+  batch_size: 1
+  strategies:
+    text:
+      type: recursive
+      chunk_size: 500
+      chunk_overlap: 700
+      embeddings: {}
+      semantic_config: {}
+      separators: ["\n\n", "\n", " ", ""]
+    table:
+      type: table
+      max_rows_per_chunk: 10
+    image: null
+
+indexer:
+  embeddings: {}
+  vector_store: local_database
+  batch_size: 1
+  vector_precision: float32
+
+logging:
+  level: INFO
+  console_logging: true
+  file_logging: false
+
+databases:
+  local_database:
+    dsn: localhost:1521/FREEPDB1
+    user: IAT_RAG_USER
+    password: IAT_RAG_PASSWORD
+    secret_store: env_var
+    embeddings_table_name: IAT_R1_RUN_EMBEDDINGS
+    source_table_name: IAT_R1_RUN_SOURCES

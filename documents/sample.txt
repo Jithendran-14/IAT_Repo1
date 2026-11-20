@@ -1,0 +1,95 @@
+API DOCUMENTATION FOR LOCAL TESTING
+
+1. List customer orders
+
+Method: GET
+Endpoint: /customers/{customer_id}/orders
+Description: Lists orders belonging to a customer.
+
+Required path parameter:
+- customer_id: string identifying the customer.
+
+Optional query parameters:
+- status: Filter by pending, shipped or delivered.
+- limit: Number of results. Default 20. Maximum 100.
+
+Authentication:
+- Bearer token required.
+
+
+2. Get order details
+
+Method: GET
+Endpoint: /orders/{order_id}
+Description: Returns details of one order.
+
+Required path parameter:
+- order_id: string identifying the order.
+
+Responses:
+- 200: Order found.
+- 404: Order not found.
+
+Authentication:
+- Bearer token required.
+
+
+3. Create an order
+
+Method: POST
+Endpoint: /orders
+Description: Creates an order for a customer.
+
+Required JSON body fields:
+- customer_id: string.
+- items: Nonempty array of objects.
+- Each item requires product_id and quantity.
+- quantity must be a positive integer.
+
+Responses:
+- 201: Order created.
+- 400: Invalid request.
+
+Authentication:
+- Bearer token required.
+
+
+4. Cancel an order
+
+Method: POST
+Endpoint: /orders/{order_id}/cancel
+Description: Cancels an order that is still pending.
+
+Required path parameter:
+- order_id: string identifying the order.
+
+Optional JSON body field:
+- reason: string explaining the cancellation.
+
+Restrictions:
+- Shipped and delivered orders cannot be cancelled.
+
+Responses:
+- 200: Order cancelled.
+- 409: Order cannot be cancelled.
+
+Authentication:
+- Bearer token required.
+
+
+5. Track a shipment
+
+Method: GET
+Endpoint: /shipments/{shipment_id}
+Description: Returns shipment status and tracking information.
+
+Required path parameter:
+- shipment_id: string identifying the shipment.
+
+Possible shipment statuses:
+- preparing
+- in_transit
+- delivered
+
+Authentication:
+- Bearer token required.
